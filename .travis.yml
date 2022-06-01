@@ -3,24 +3,23 @@ services:
   - docker
 
 before_install:
-  - docker build -t loserforever/react-test -f ./client/Dockerfile.dev ./client
+  - cd client && docker build -t loserforever/react-test -f Dockerfile.dev .
 
 script:
-  # - docker run loserforever/react-test npm run test -- --coverage --watchAll=false
-  - docker run loserforever/react-test
-  - docker ps
-  - docker exec -it $(docker ps -a -q) sh
-  - ls
-
-after_success:
-  - docker build -t loserforever/multi-client ./client
-  - docker build -t loserforever/multi-nginx ./nginx
-  - docker build -t loserforever/multi-server ./server
-  - docker build -t loserforever/multi-worker ./worker
-  # Login docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # Take those images and push them to docker hub
-  - docker push loserforever/multi-client
-  - docker push loserforever/multi-nginx
-  - docker push loserforever/multi-server
-  - docker push loserforever/multi-worker
+  - docker run loserforever/react-test npm run test -- --coverage --watchAll=false
+  # - docker run loserforever/react-test
+  # - docker ps
+  # - docker exec -it $(docker ps -a -q) sh
+  # - ls
+# after_success:
+#   - docker build -t loserforever/multi-client ./client
+#   - docker build -t loserforever/multi-nginx ./nginx
+#   - docker build -t loserforever/multi-server ./server
+#   - docker build -t loserforever/multi-worker ./worker
+#   # Login docker CLI
+#   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+#   # Take those images and push them to docker hub
+#   - docker push loserforever/multi-client
+#   - docker push loserforever/multi-nginx
+#   - docker push loserforever/multi-server
+#   - docker push loserforever/multi-worker
