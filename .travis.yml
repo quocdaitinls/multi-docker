@@ -4,6 +4,8 @@ services:
 
 before_install:
   - cd client
+  - pwd
+  - ls
   - docker build -t loserforever/react-test -f Dockerfile.dev .
 
 script:
