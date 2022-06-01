@@ -3,7 +3,8 @@ services:
   - docker
 
 before_install:
-  - cd client && docker build -t loserforever/react-test -f Dockerfile.dev .
+  - cd client
+  - docker build -t loserforever/react-test -f Dockerfile.dev .
 
 script:
   - docker run loserforever/react-test npm run test -- --coverage --watchAll=false
