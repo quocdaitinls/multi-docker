@@ -1,0 +1,10 @@
+{
+  "AWSEBDockerrunVersion": 3.8,
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "loserforever/multi-client",
+      "hostname": "client"
+    }
+  ]
+}
