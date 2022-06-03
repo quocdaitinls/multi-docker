@@ -1,10 +1,36 @@
 {
-  "AWSEBDockerrunVersion": 3.8,
+  "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
       "name": "client",
       "image": "loserforever/multi-client",
-      "hostname": "client"
+      "hostname": "client",
+      "essential": false
+    },
+    {
+      "name": "server",
+      "image": "loserforever/multi-server",
+      "hostname": "api",
+      "essential": false
+    },
+    {
+      "name": "worker",
+      "image": "loserforever/multi-worker",
+      "hostname": "worker",
+      "essential": false
+    },
+    {
+      "name": "nginx",
+      "image": "loserforever/multi-nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMapping": [
+        {
+          "hostPort": 80,
+          "conteinerPort": 80
+        }
+      ],
+      "links": ["client", "server"]
     }
   ]
 }
