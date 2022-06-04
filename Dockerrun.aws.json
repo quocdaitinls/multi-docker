@@ -29,7 +29,7 @@
       "essential": true,
       "portMapping": [
         {
-          "hostPort": 6000,
+          "hostPort": 5000,
           "conteinerPort": 80
         }
       ],
