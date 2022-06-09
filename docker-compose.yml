@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRESS_DB=postgres
+  redis:
+    image: 'redis:latest'
+  nginx:
+    restart: always
+    image: loserforever/multi-nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - client
+      - api
+  api:
+    image: loserforever/multi-server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+    depends_on:
+      - postgres
+      - redis
+  client:
+    image: loserforever/multi-client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+  worker:
+    image: loserforever/multi-worker
+    volumes:
+      - /app/node_modules
+      - ./worker:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
