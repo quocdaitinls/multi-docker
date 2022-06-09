@@ -8,7 +8,11 @@ services:
       - '80:80'
   api:
     image: loserforever/multi-server
+    env_file:
+      - ./env/.env.prod
   client:
     image: loserforever/multi-client
   worker:
     image: loserforever/multi-worker
+    env_file:
+      - ./env/.env.prod
