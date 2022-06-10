@@ -8,11 +8,18 @@ services:
       - '80:80'
   api:
     image: loserforever/multi-server
-    env_file:
-      - ./env/.env.prod
+    environment:
+      - REDIS_HOST
+      - REDIS_PORT
+      - PGUSER
+      - PGHOST
+      - PGDATABASE
+      - PGPASSWORD
+      - PGPORT
   client:
     image: loserforever/multi-client
   worker:
     image: loserforever/multi-worker
-    env_file:
-      - ./env/.env.prod
+    environment:
+      - REDIS_HOST
+      - REDIS_PORT
