@@ -18,12 +18,13 @@ class Fib extends Component {
 
   async fetchValues() {
     const values = await axios.get("/api/values/current");
-    this.setState({values: values.data || []});
+    if (Array.isArray(values?.data)) this.setState({values: values.data});
   }
 
   async fetchIndices() {
     const seenIndices = await axios.get("/api/values/all");
-    this.setState({seenIndices: seenIndices.data || []});
+    if (Array.isArray(seenIndices?.data))
+      this.setState({seenIndices: seenIndices.data});
   }
 
   renderSeenIndices() {
