@@ -1,4 +1,7 @@
-sudo: requried
+sudo: required
+branches:
+  only:
+    - aws_elastic_beanstalk
 services:
   - docker
 
