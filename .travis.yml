@@ -1,0 +1,31 @@
+sudo: required
+branches:
+  only:
+    - aws_eks
+services:
+  - docker
+
+before_install:
+  - docker build -t loserforever/client-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run loserforever/client-test npm run test -- --coverage --watchAll=false
+
+after_success:
+  - docker build -t loserforever/multi-client-k8s ./client
+  - docker build -t loserforever/multi-server-k8s ./server
+  - docker build -t loserforever/multi-worker-k8s ./worker
+  # Login docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push loserforever/multi-client-k8s
+  - docker push loserforever/multi-server-k8s
+  - docker push loserforever/multi-worker-k8s
+
+deploy:
+  provider: s3
+  region: ap-southeast-1
+  bucket: multidocker-eks
+  uploader: travis-build
+  access_key_id: AKIASFNZAZFWDTZBB67D
+  secret_access_key: 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

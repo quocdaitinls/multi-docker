@@ -5,3 +5,5 @@ aws_deployer.csv
 !.elasticbeanstalk/*.global.yml
 
 env/*
+
+deployer01_credentials.csv
