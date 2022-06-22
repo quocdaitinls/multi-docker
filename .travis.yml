@@ -29,3 +29,5 @@ deploy:
   uploader: travis-build
   access_key_id: AKIASFNZAZFWDTZBB67D
   secret_access_key: 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
+  on:
+    branch: aws_eks
