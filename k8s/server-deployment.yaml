@@ -14,60 +14,57 @@ spec:
     spec:
       containers:
         - name: server
-          image: loserforever/multi-server-k8s
+          image: loserforever/multi-server
           ports:
             - containerPort: 5000
           env:
-            - name: REDIS_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: env-configmap
-                  key: redis_host
-            - name: REDIS_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: env-configmap
-                  key: redis_port
-            - name: PGHOST
-              valueFrom:
-                configMapKeyRef:
-                  name: env-configmap
-                  key: pg_host
-            - name: PGPORT
-              valueFrom:
-                configMapKeyRef:
-                  name: env-configmap
-                  key: pg_port
-            - name: PGDATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: env-configmap
-                  key: pg_database
-            - name: PGUSER
-              valueFrom:
-                secretKeyRef:
-                  name: env-secret
-                  key: pg_user
-            - name: PGPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: env-secret
-                  key: pg_password
-
             # - name: REDIS_HOST
-            #   value: redis-cluster-ip-service
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: env-configmap
+            #       key: redis_host
             # - name: REDIS_PORT
-            #   value: "6379"
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: env-configmap
+            #       key: redis_port
             # - name: PGHOST
-            #   value: postgres-cluster-ip-service
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: env-configmap
+            #       key: pg_host
             # - name: PGPORT
-            #   value: "5432"
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: env-configmap
+            #       key: pg_port
             # - name: PGDATABASE
-            #   value: fibvalues
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: env-configmap
+            #       key: pg_database
             # - name: PGUSER
-            #   value: admin
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: env-secret
+            #       key: pg_user
             # - name: PGPASSWORD
             #   valueFrom:
             #     secretKeyRef:
-            #       name: pgpassword
-            #       key: PGPASSWORD
+            #       name: env-secret
+            #       key: pg_password
+
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: "6379"
+            - name: PGHOST
+              value: postgres-cluster-ip-service
+            - name: PGPORT
+              value: "5432"
+            - name: PGDATABASE
+              value: fibvalues
+            - name: PGUSER
+              value: postgres
+            - name: PGPASSWORD
+              value: postgres

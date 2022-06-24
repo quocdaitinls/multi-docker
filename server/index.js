@@ -23,9 +23,22 @@ const pgClient = new Pool({
 const startPostgres = async () => {
   pgClient.on("error", () => console.log("Lost PG connection."));
 
-  pgClient
-    .query("CREATE TABLE IF NOT EXISTS values (number INT)")
-    .catch((err) => console.log(err));
+  // pgClient
+  //   .query("CREATE TABLE IF NOT EXISTS values (number INT)")
+  //   .catch((err) => console.log(err));
+  await pgClient.connect().then((client) => {
+    console.log("After connect");
+    return client
+      .query("CREATE TABLE IF NOT EXISTS values (number INT)", [1])
+      .then((res) => {
+        client.release();
+        console.log(res);
+      })
+      .catch((err) => {
+        client.release();
+        console.log(err);
+      });
+  });
 };
 
 // Redis Client Setup
@@ -44,21 +57,25 @@ const startRedis = async () => {
 // Express router config
 const configRouter = () => {
   app.get("/", (req, res) => {
+    console.log(`API CALLED GET "/"`);
     res.send("Hi");
   });
 
   app.get("/values/all", async (req, res) => {
+    console.log(`API CALLED GET "/values/all"`);
     const values = await pgClient.query("SELECT * FROM values");
 
     res.send(values.rows);
   });
 
   app.get("/values/current", async (req, res) => {
+    console.log(`API CALLED GET "/values/current"`);
     const values = await redisClient.hGetAll("values");
     res.send(values);
   });
 
   app.post("/values", async (req, res) => {
+    console.log(`API CALLED POST "/values"`);
     const index = req.body.index;
 
     if (parseInt(index) > 40) {

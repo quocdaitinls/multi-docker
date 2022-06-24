@@ -14,20 +14,20 @@ spec:
     spec:
       containers:
         - name: worker
-          image: loserforever/multi-worker-k8s
+          image: loserforever/multi-worker
           env:
-            - name: REDIS_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: env-configmap
-                  key: redis_host
-            - name: REDIS_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: env-configmap
-                  key: redis_port
-
             # - name: REDIS_HOST
-            #   value: redis-cluster-ip-service
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: env-configmap
+            #       key: redis_host
             # - name: REDIS_PORT
-            #   value: "6379"
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: env-configmap
+            #       key: redis_port
+
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: "6379"
