@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-configmap
+data:
+  redis_host: redis-cluster-ip-service
+  redis_port: "6379"
+  pg_host: postgres-cluster-ip-service
+  pg_port: "5432"
+  pg_database: fibvalues

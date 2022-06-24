@@ -27,11 +27,27 @@ spec:
               subPath: postgres
           env:
             - name: POSTGRES_DB
-              value: fibvalues
+              valueFrom:
+                configMapKeyRef:
+                  name: env-configmap
+                  key: pg_database
             - name: POSTGRES_USER
-              value: admin
+              valueFrom:
+                secretKeyRef:
+                  name: env-secret
+                  key: pg_user
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: pgpassword
-                  key: PGPASSWORD
+                  name: env-secret
+                  key: pg_password
+
+            # - name: POSTGRES_DB
+            #   value: fibvalues
+            # - name: POSTGRES_USER
+            #   value: admin
+            # - name: POSTGRES_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: pgpassword
+            #       key: PGPASSWORD

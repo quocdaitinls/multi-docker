@@ -6,4 +6,4 @@ aws_deployer.csv
 
 env/*
 
-deployer01_credentials.csv
+keys
